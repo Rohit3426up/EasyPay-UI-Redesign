@@ -4,13 +4,21 @@
 
 @layer base {
   body {
-    @apply font-sans antialiased bg-gray-200 text-gray-900;
+    @apply font-sans antialiased;
+    background-color: #f9f9f8;
+    color: #1a1c1c;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  .font-tnum {
+    font-variant-numeric: tabular-nums;
   }
 }
 
 @layer utilities {
   .app-container {
-    @apply w-full min-h-screen bg-gray-bg relative overflow-x-hidden shadow-2xl;
+    @apply w-full min-h-screen relative overflow-x-hidden;
+    background-color: #f9f9f8;
   }
 
   .hide-scrollbar::-webkit-scrollbar {

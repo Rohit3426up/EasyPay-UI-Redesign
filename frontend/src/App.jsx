@@ -61,9 +61,9 @@ function AppContent() {
 
   return (
     <Routes>
+      <Route path="/welcome" element={<WelcomeScreen onNext={() => window.location.href = '/login'} />} />
       <Route element={<UserLayout />}>
         <Route path="/" element={<ProtectedRoute><HomeScreen /></ProtectedRoute>} />
-        <Route path="/welcome" element={<WelcomeScreen onNext={() => window.location.href = '/login'} />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/scan" element={<ProtectedRoute><ScannerScreen /></ProtectedRoute>} />

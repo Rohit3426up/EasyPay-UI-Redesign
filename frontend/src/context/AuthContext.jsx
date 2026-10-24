@@ -25,6 +25,16 @@ export const AuthProvider = ({ children }) => {
     throw new Error(data.error || 'Login failed');
   };
 
+  const googleLogin = async (authPayload) => {
+    const data = await api.googleAuth(authPayload);
+    if (data.success) {
+      setUser(data.user);
+      localStorage.setItem('user_session', JSON.stringify(data.user));
+      return data.user;
+    }
+    throw new Error(data.error || 'Google login failed');
+  };
+
   const register = async (userData) => {
     const data = await api.register(userData);
     if (data.success) {
@@ -62,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateHealthProfile, updateUserProfile }}>
+    <AuthContext.Provider value={{ user, loading, login, googleLogin, register, logout, updateHealthProfile, updateUserProfile }}>
       {children}
     </AuthContext.Provider>
   );

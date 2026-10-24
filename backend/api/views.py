@@ -552,6 +552,65 @@ class UserLoginView(APIView):
         except AppUser.DoesNotExist:
             return Response({'error': 'Invalid email or password'}, status=401)
 
+class GoogleAuthView(APIView):
+    def post(self, request):
+        credential = request.data.get('credential')
+        user_info = request.data.get('user_info')
+        dob = request.data.get('dob')
+        
+        email = None
+        full_name = 'Google User'
+        
+        # 1. If real Google ID token credential is sent, verify with Google's tokeninfo endpoint
+        if credential:
+            try:
+                verify_url = f"https://oauth2.googleapis.com/tokeninfo?id_token={credential}"
+                res = requests.get(verify_url, timeout=6)
+                if res.status_code == 200:
+                    data = res.json()
+                    email = data.get('email')
+                    full_name = data.get('name') or data.get('given_name') or email.split('@')[0]
+                else:
+                    return Response({'error': 'Invalid or expired Google credential token'}, status=400)
+            except Exception as e:
+                return Response({'error': f"Failed to verify Google token: {str(e)}"}, status=500)
+        elif user_info and user_info.get('email'):
+            email = user_info.get('email')
+            full_name = user_info.get('name') or email.split('@')[0]
+        else:
+            return Response({'error': 'Google credential token or user_info is required'}, status=400)
+            
+        if not email:
+            return Response({'error': 'Could not extract valid email from Google token'}, status=400)
+            
+        # Get existing user or create a new user profile
+        user = AppUser.objects.filter(email=email).first()
+        if not user:
+            qr_code = generate_user_qr(email)
+            user = AppUser.objects.create(
+                email=email,
+                full_name=full_name,
+                password=str(uuid.uuid4()), # random password for OAuth user
+                dob=dob if dob else None,
+                qr_code=qr_code,
+                health_conditions=[]
+            )
+        else:
+            if dob and not user.dob:
+                user.dob = dob
+                user.save()
+            
+        return Response({
+            'success': True,
+            'user': {
+                'full_name': user.full_name,
+                'email': user.email,
+                'dob': user.dob,
+                'health_conditions': user.health_conditions or [],
+                'qr_code': user.qr_code
+            }
+        })
+
 class UserHealthProfileView(APIView):
     def get(self, request, email):
         try:

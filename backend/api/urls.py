@@ -36,6 +36,7 @@ urlpatterns = [
     # User Auth & Profile
     path('user/register/', views.UserRegisterView.as_view()),
     path('user/login/', views.UserLoginView.as_view()),
+    path('user/google-auth/', views.GoogleAuthView.as_view()),
     path('user/health-profile/<str:email>/', views.UserHealthProfileView.as_view()),
     path('user/profile-update/<str:email>/', views.UserProfileUpdateView.as_view()),
 

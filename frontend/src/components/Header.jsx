@@ -45,7 +45,7 @@ function Header() {
     return { title: 'EasyPay', showBack: true };
   };
 
-  const hiddenRoutes = ['/login', '/register', '/scan', '/guard', '/admin'];
+  const hiddenRoutes = ['/welcome', '/login', '/register', '/scan', '/guard', '/admin'];
   if (hiddenRoutes.some(route => location.pathname.startsWith(route)) && location.pathname !== '/') {
     return null;
   }

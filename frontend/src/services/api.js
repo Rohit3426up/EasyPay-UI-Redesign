@@ -236,6 +236,19 @@ export const api = {
     return res.json();
   },
 
+  async googleAuth(authPayload) {
+    const res = await fetch(`${BASE_URL}/user/google-auth/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(authPayload),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || "Google authentication failed");
+    }
+    return res.json();
+  },
+
   async getHealthProfile(email) {
     const res = await fetch(`${BASE_URL}/user/health-profile/${email}/`, {
       credentials: "include",
