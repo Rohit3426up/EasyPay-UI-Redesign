@@ -11,6 +11,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=100)
     category = models.CharField(max_length=50)
     emoji = models.CharField(max_length=10, default='🍴')
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     
     price = models.FloatField(default=0.00)
     base_score = models.IntegerField(default=50)

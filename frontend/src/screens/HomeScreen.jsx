@@ -121,11 +121,31 @@ const HomeScreen = () => {
                 className="min-w-[150px] w-[150px] bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex flex-col relative group"
               >
                 <Link to={`/health/analysis/${product.barcode}`} className="flex flex-col items-center">
-                  <div className="text-4xl mb-2 bg-gray-50 w-16 h-16 rounded-xl flex items-center justify-center group-active:scale-95 transition-transform">
-                    {product.emoji || '📦'}
+                  <div className="w-20 h-20 mb-2 bg-[#f9f9f8] rounded-xl flex items-center justify-center p-1.5 overflow-hidden group-active:scale-95 transition-transform border border-gray-100">
+                    {product.image_url ? (
+                      <img
+                        src={product.image_url}
+                        alt={product.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain mix-blend-multiply"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          if (e.currentTarget.nextElementSibling) {
+                            e.currentTarget.nextElementSibling.style.display = 'flex';
+                          }
+                        }}
+                      />
+                    ) : null}
+                    <span 
+                      style={{ display: product.image_url ? 'none' : 'flex' }} 
+                      className="text-3xl items-center justify-center"
+                    >
+                      {product.emoji || '📦'}
+                    </span>
                   </div>
                   <h3 className="font-bold text-gray-900 text-xs text-center line-clamp-1">{product.name}</h3>
-                  <p className="text-[10px] text-gray-500 mb-2">{product.brand}</p>
+                  <p className="text-[10px] text-gray-500 mb-1">{product.brand}</p>
                   <p className="text-sm font-bold text-primary">₹{product.price}</p>
                 </Link>
                 

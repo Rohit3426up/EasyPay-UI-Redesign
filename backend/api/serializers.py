@@ -6,7 +6,7 @@ class ProductSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ['id', 'barcode', 'name', 'brand', 'category', 'emoji', 'price', 
+        fields = ['id', 'barcode', 'name', 'brand', 'category', 'emoji', 'image_url', 'price', 
                   'base_score', 'ingredients', 'nutrition']
 
 class ProductShortSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class ProductShortSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ['id', 'barcode', 'name', 'brand', 'category', 'emoji', 'price']
+        fields = ['id', 'barcode', 'name', 'brand', 'category', 'emoji', 'image_url', 'price']
 
 class CartSerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)

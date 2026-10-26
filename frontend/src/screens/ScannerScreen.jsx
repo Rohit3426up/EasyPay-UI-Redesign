@@ -254,8 +254,28 @@ const ScannerScreen = () => {
             </button>
 
             <div className="flex-1 overflow-y-auto hide-scrollbar flex flex-col items-center">
-              <div className="text-6xl mb-4 bg-white shadow-sm w-24 h-24 flex items-center justify-center rounded-3xl border border-gray-100">
-                {scannedProduct.emoji || '📦'}
+              <div className="mb-4 bg-white shadow-sm w-24 h-24 flex items-center justify-center rounded-3xl border border-gray-100 p-2 overflow-hidden">
+                {scannedProduct.image_url ? (
+                  <img 
+                    src={scannedProduct.image_url} 
+                    alt={scannedProduct.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain mix-blend-multiply"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      if (e.currentTarget.nextElementSibling) {
+                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                      }
+                    }}
+                  />
+                ) : null}
+                <span 
+                  style={{ display: scannedProduct.image_url ? 'none' : 'flex' }}
+                  className="text-5xl items-center justify-center"
+                >
+                  {scannedProduct.emoji || '📦'}
+                </span>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 text-center px-4">{scannedProduct.name}</h2>
               <p className="text-gray-500 font-medium text-sm mb-4">{scannedProduct.brand}</p>

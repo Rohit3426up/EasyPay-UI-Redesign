@@ -96,8 +96,28 @@ function CartScreen() {
               exit={{ opacity: 0, scale: 0.95 }}
               className="bg-white border border-gray-100 shadow-sm rounded-2xl p-4 flex items-center gap-4"
             >
-              <div className="text-4xl w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 shrink-0 shadow-inner">
-                {item.emoji || '📦'}
+              <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 shrink-0 p-1 overflow-hidden">
+                {item.image_url ? (
+                  <img
+                    src={item.image_url}
+                    alt={item.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-contain mix-blend-multiply"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      if (e.currentTarget.nextElementSibling) {
+                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                      }
+                    }}
+                  />
+                ) : null}
+                <span 
+                  style={{ display: item.image_url ? 'none' : 'flex' }} 
+                  className="text-3xl items-center justify-center"
+                >
+                  {item.emoji || '📦'}
+                </span>
               </div>
               
               <div className="flex-1 min-w-0 py-1">

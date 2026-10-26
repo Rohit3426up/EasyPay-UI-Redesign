@@ -13,3 +13,4 @@ whitenoise
 
 openai==1.61.0
 groq>=1.7.0
+cloudinary>=1.46.0

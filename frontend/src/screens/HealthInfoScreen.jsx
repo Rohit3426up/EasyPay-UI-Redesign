@@ -113,9 +113,29 @@ const HealthInfoScreen = ({ addToHistory = () => {} }) => {
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-32 h-32 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border-4 border-white/30 text-6xl shadow-xl"
+            className="w-32 h-32 bg-white rounded-3xl p-3 flex items-center justify-center border-4 border-white/50 shadow-xl overflow-hidden"
           >
-            {product.emoji || '🥤'}
+            {product.image_url ? (
+              <img 
+                src={product.image_url} 
+                alt={product.name} 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-contain mix-blend-multiply"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  if (e.currentTarget.nextElementSibling) {
+                    e.currentTarget.nextElementSibling.style.display = 'flex';
+                  }
+                }}
+              />
+            ) : null}
+            <span 
+              style={{ display: product.image_url ? 'none' : 'flex' }} 
+              className="text-6xl items-center justify-center"
+            >
+              {product.emoji || '🥤'}
+            </span>
           </motion.div>
         </div>
       </div>

@@ -56,12 +56,15 @@ def _get_or_fetch_product(barcode):
                             'reason': 'Fetched from OpenFoodFacts'
                         })
 
+                image_url = p_data.get('image_front_url') or p_data.get('image_url') or ''
+
                 product = Product.objects.create(
                     barcode=barcode,
                     name=name,
                     brand=brand,
                     category=category,
                     price=0.00,
+                    image_url=image_url,
                     ingredients=ingredients_list,
                     nutrition=nutrition_dict
                 )
