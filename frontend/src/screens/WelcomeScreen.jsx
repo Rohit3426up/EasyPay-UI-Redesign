@@ -1,69 +1,94 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, ArrowRight, Zap, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Zap, ShieldCheck, Sparkles, QrCode } from 'lucide-react';
 
 const WelcomeScreen = ({ onNext }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-bg px-6 pb-12 pt-16">
+    <div className="flex flex-col min-h-screen bg-surface px-6 pt-12 pb-8 max-w-md mx-auto select-none">
       
       <div className="flex-1 flex flex-col items-center justify-center text-center">
+        {/* Brand Monogram Icon */}
         <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
+          initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-24 h-24 bg-primary text-white rounded-[2rem] flex items-center justify-center mb-8 shadow-2xl shadow-primary/30"
+          transition={{ duration: 0.4 }}
+          className="w-20 h-20 bg-gradient-to-br from-primary via-primary-500 to-primary-700 text-white rounded-3xl flex items-center justify-center mb-6 shadow-coral relative"
         >
-          <span className="text-4xl font-bold">EP</span>
+          <span className="font-display font-black text-3xl tracking-tight">EP</span>
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center">
+            <Sparkles size={12} className="text-white" />
+          </div>
         </motion.div>
 
-        <motion.h1 
-          initial={{ y: 20, opacity: 0 }}
+        {/* Hero Title */}
+        <motion.div
+          initial={{ y: 15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-4xl font-bold text-gray-900 mb-4"
+          transition={{ delay: 0.15 }}
         >
-          Welcome to <span className="text-primary">EasyPay</span>
-        </motion.h1>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-50 border border-primary-200/70 text-primary text-[10px] font-bold uppercase tracking-wider mb-2">
+            <span>Next-Gen Retail Companion</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 tracking-tight leading-tight">
+            Welcome to <span className="text-primary">EasyPay</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-2 max-w-xs leading-relaxed">
+            Scan products in supermarket aisles, get AI-powered health scores, and exit without queuing.
+          </p>
+        </motion.div>
 
-        <motion.p 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-gray-500 text-lg mb-12 max-w-[280px]"
-        >
-          Skip the queue. Scan products, get health insights, and pay instantly.
-        </motion.p>
-
-        <div className="w-full max-w-7xl space-y-4 mb-12">
+        {/* Feature Cards Stack */}
+        <div className="w-full space-y-2.5 my-8">
           {[
-            { icon: <Zap size={20} className="text-warning" />, title: "Instant Scan & Go" },
-            { icon: <ShieldCheck size={20} className="text-success" />, title: "Health Analysis" },
+            { 
+              icon: <Zap size={18} className="text-primary" />, 
+              title: "Instant Queue-Free Checkout", 
+              desc: "Scan barcodes on physical shelves and pay directly." 
+            },
+            { 
+              icon: <ShieldCheck size={18} className="text-emerald-600" />, 
+              title: "AI Health & Allergen Guidance", 
+              desc: "Personalized warnings mapped to your dietary profile." 
+            },
+            { 
+              icon: <QrCode size={18} className="text-slate-700" />, 
+              title: "Digital Security Exit Pass", 
+              desc: "Automated gate turnstile opening with verified QR." 
+            },
           ].map((item, i) => (
             <motion.div 
               key={i}
-              initial={{ x: -20, opacity: 0 }}
+              initial={{ x: -15, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.5 + i * 0.1 }}
-              className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100"
+              transition={{ delay: 0.3 + i * 0.1 }}
+              className="flex items-start gap-3.5 bg-white p-3.5 rounded-2xl shadow-xs border border-slate-200/80 text-left"
             >
-              <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center">
+              <div className="w-9 h-9 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
                 {item.icon}
               </div>
-              <span className="font-semibold text-gray-800">{item.title}</span>
+              <div className="min-w-0 flex-1">
+                <span className="font-display font-bold text-xs text-slate-900 block">
+                  {item.title}
+                </span>
+                <span className="text-[11px] text-slate-500 font-medium leading-relaxed block mt-0.5">
+                  {item.desc}
+                </span>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Primary Action Button */}
       <motion.button
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 15, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.7 }}
+        transition={{ delay: 0.6 }}
         onClick={onNext}
-        className="w-full bg-primary hover:bg-primary-600 text-white font-bold text-lg py-5 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-primary/30"
+        className="w-full bg-primary hover:bg-primary-600 text-white font-display font-bold text-base py-4 rounded-full flex items-center justify-center gap-2 shadow-coral active:scale-[0.98] transition-all"
       >
         <span>Get Started</span>
-        <ArrowRight size={20} />
+        <ArrowRight size={18} strokeWidth={2.5} />
       </motion.button>
       
     </div>
